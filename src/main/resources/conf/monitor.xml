@@ -1,0 +1,24 @@
+<monitor>
+    <name>zookeeper-monitor</name>
+    <type>managed</type>
+    <description>Zookeeper Monitoring Extension</description>
+    <monitor-configuration></monitor-configuration>
+    <monitor-run-task>
+        <execution-style>periodic</execution-style>
+        <execution-frequency-in-seconds>60</execution-frequency-in-seconds>
+        <name>Zookeeper Monitor Run task</name>
+        <display-name>Zookeeper Monitor Run task</display-name>
+        <description>This extension monitors the configured zookeeper nodes.</description>
+        <type>java</type>
+        <execution-timeout-in-secs>60</execution-timeout-in-secs>
+        <task-arguments>
+            <!-- config file-->
+            <argument name="config-file" is-required="true" default-value="monitors/Zookeeper/config.yaml" />
+            <argument name="log-prefix" is-required="false" default-value="[ZookeeperAppDExt] " />
+        </task-arguments>
+        <java-task>
+            <classpath>zookeeper-monitoring-extension.jar</classpath>
+            <impl-class>com.appdynamics.extensions.zookeeper.ZookeeperMonitor</impl-class>
+        </java-task>
+    </monitor-run-task>
+</monitor>
