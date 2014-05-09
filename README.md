@@ -5,8 +5,8 @@ An AppDynamics extension to be used with a stand alone Java machine agent to pro
 
 ## Metrics Provided ##
 
-The list of metrics provided is self-configurable. The metrics are extracted by telneting into the Zookeeper servers and running commands listed in the [Zookeeper Documentation][http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands].
-The commands and the fields to be extracted can be configured in the config.yaml file mentioned below.
+The list of metrics provided is self-configurable. The metrics are extracted by telneting into the Zookeeper servers and running commands listed in the [Zookeeper Documentation].
+The commands and the fields to be extracted can be configured in the config.yml file mentioned below.
 
 
 
@@ -18,7 +18,7 @@ The commands and the fields to be extracted can be configured in the config.yaml
 
 
 ## Configuration ##
-1. Configure the zookeeper instances by editing the config.yaml file in `<MACHINE_AGENT_HOME>/monitors/Zookeeper/`.
+1. Configure the zookeeper instances by editing the config.yml file in `<MACHINE_AGENT_HOME>/monitors/Zookeeper/`.
 2. Configure the zookeeper commands. Depending on the version of Zookeeper, you can run either "mntr" or "stat" or any other command. Please make sure you provide the right separator parse the metric key and value.
  For eg. "stat" command returns the following
 
@@ -29,7 +29,7 @@ The commands and the fields to be extracted can be configured in the config.yaml
     Outstanding: 0
     Node count: 4
 
- You can configure which fields to be extracted and the separator to be used (":" here). Below is a sample config.yaml file.
+ You can configure which fields to be extracted and the separator to be used (":" here). Below is a sample config.yml file.
 
  "ruok" command is the for the health check of the zookeeper server.
 
@@ -83,15 +83,15 @@ The commands and the fields to be extracted can be configured in the config.yaml
           metricPrefix:  "Custom Metrics|Zookeeper|"
    ```
 
-  Please make sure you have the right indentation while editing the config.yaml and that you do not mess up with tab (\t) and space.
+  Please make sure you indent your yaml file.
 
 
-2. Configure the path to the config.yaml file by editing the <task-arguments> in the monitor.xml file. Below is the sample
+2. Configure the path to the config.yml file by editing the <task-arguments> in the monitor.xml file. Below is the sample
 
      ```
      <task-arguments>
          <!-- config file-->
-         <argument name="config-file" is-required="true" default-value="monitors/ZookeeperMonitor/config.yaml" />
+         <argument name="config-file" is-required="true" default-value="monitors/ZookeeperMonitor/config.yml" />
           ....
      </task-arguments>
 
@@ -105,3 +105,4 @@ The commands and the fields to be extracted can be configured in the config.yaml
 [Github]: https://github.com/Appdynamics/zookeeper-monitoring-extension
 [AppDynamics Exchange]: http://community.appdynamics.com/t5/AppDynamics-eXchange/idb-p/extensions
 [AppDynamics Center of Excellence]: mailto:ace-request@appdynamics.com
+[Zookeeper Documentation]: http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands

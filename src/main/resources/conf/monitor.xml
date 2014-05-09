@@ -13,7 +13,7 @@
         <execution-timeout-in-secs>60</execution-timeout-in-secs>
         <task-arguments>
             <!-- config file-->
-            <argument name="config-file" is-required="true" default-value="monitors/ZookeeperMonitor/config.yaml" />
+            <argument name="config-file" is-required="true" default-value="monitors/ZookeeperMonitor/config.yml" />
             <argument name="log-prefix" is-required="false" default-value="[ZookeeperAppDExt] " />
         </task-arguments>
         <java-task>
