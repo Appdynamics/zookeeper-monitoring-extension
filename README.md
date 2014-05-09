@@ -1,2 +1,107 @@
 zookeeper-monitoring-extension
 ==============================
+An AppDynamics extension to be used with a stand alone Java machine agent to provide metrics for Zookeeper servers.
+
+
+## Metrics Provided ##
+
+The list of metrics provided is self-configurable. The metrics are extracted by telneting into the Zookeeper servers and running commands listed in the [Zookeeper Documentation][http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands].
+The commands and the fields to be extracted can be configured in the config.yaml file mentioned below.
+
+
+
+## Installation ##
+
+1. Run "mvn clean install" and find the ZookeeperMonitor.zip file in the "target" folder. You can also download the ZookeeperMonitor.zip from [AppDynamics Exchange][].
+2. Unzip as ZookeeperMonitor and copy the ZookeeperMonitor directory to `<MACHINE_AGENT_HOME>/monitors`.
+
+
+
+## Configuration ##
+1. Configure the zookeeper instances by editing the config.yaml file in `<MACHINE_AGENT_HOME>/monitors/Zookeeper/`.
+2. Configure the zookeeper commands. Depending on the version of Zookeeper, you can run either "mntr" or "stat" or any other command. Please make sure you provide the right separator parse the metric key and value.
+ For eg. "stat" command returns the following
+
+    Latency min/avg/max: 0/0/0
+    Received: 87
+    Sent: 86
+    Connections: 1
+    Outstanding: 0
+    Node count: 4
+
+ You can configure which fields to be extracted and the separator to be used (":" here). Below is a sample config.yaml file.
+
+ "ruok" command is the for the health check of the zookeeper server.
+
+  ```
+          servers:
+            - server: "localhost:2181"     #host:port
+              displayName: zh1
+            - server: ""
+              displayName: zh2
+            - server: ""
+              displayName: zh3
+
+          # The list of commands can be found here http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands
+
+          commands:
+             - command: "ruok"
+             - command: "stat"
+               separator: ":"
+               fields: [
+                  Received,
+                  Sent,
+                  Outstanding,
+                  Node count,
+                  Latency min/avg/max
+               ]
+
+          # Uncomment the following to support additional metrics
+          #   - command: "mntr"
+          #     separator: "\t"
+          #     fields: [
+          #       zk_avg_latency,
+          #       zk_max_latency,
+          #       zk_min_latency,
+          #       zk_packets_received,
+          #       zk_packets_sent,
+          #       zk_num_alive_connections,
+          #       zk_outstanding_requests,
+          #       zk_znode_count,
+          #       zk_watch_count,
+          #       zk_ephemerals_count,
+          #       zk_approximate_data_size,
+          #       zk_followers,                      #only exposed by the Leader
+          #       zk_synced_followers,               #only exposed by the Leader
+          #       zk_pending_syncs,                  #only exposed by the Leader
+          #       zk_open_file_descriptor_count,     #only available on Unix platforms
+          #       zk_max_file_descriptor_count       #only available on Unix platforms
+          #     ]
+
+
+
+          metricPrefix:  "Custom Metrics|Zookeeper|"
+   ```
+
+  Please make sure you have the right indentation while editing the config.yaml and that you do not mess up with tab (\t) and space.
+
+
+2. Configure the path to the config.yaml file by editing the <task-arguments> in the monitor.xml file. Below is the sample
+
+     ```
+     <task-arguments>
+         <!-- config file-->
+         <argument name="config-file" is-required="true" default-value="monitors/ZookeeperMonitor/config.yaml" />
+          ....
+     </task-arguments>
+
+     ```
+
+
+
+
+
+
+[Github]: https://github.com/Appdynamics/zookeeper-monitoring-extension
+[AppDynamics Exchange]: http://community.appdynamics.com/t5/AppDynamics-eXchange/idb-p/extensions
+[AppDynamics Center of Excellence]: mailto:ace-request@appdynamics.com
