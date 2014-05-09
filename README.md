@@ -34,59 +34,60 @@ For eg. "stat" command returns the following
 
  
   ```
-          servers:
-            - server: "localhost:2181"     #host:port
-              displayName: zh1
-            - server: ""
-              displayName: zh2
+      servers:
+        - server: "localhost:2181"     #host:port
+          displayName: zh1
+        - server: ""
+          displayName: zh2
+     
+     
+      # The list of commands can be found here http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands
+     
+      commands:
+         - command: "ruok"
+         - command: "stat"
+           separator: ":"
+           fields: [
+              Received,
+              Sent,
+              Outstanding,
+              Node count,
+              Latency min/avg/max
+           ]
+     
+      # Uncomment the following to support additional metrics
+      #   - command: "mntr"
+      #     separator: "\t"
+      #     fields: [
+      #       zk_avg_latency,
+      #       zk_max_latency,
+      #       zk_min_latency,
+      #       zk_packets_received,
+      #       zk_packets_sent,
+      #       zk_num_alive_connections,
+      #       zk_outstanding_requests,
+      #       zk_znode_count,
+      #       zk_watch_count,
+      #       zk_ephemerals_count,
+      #       zk_approximate_data_size,
+      #       zk_followers,                      #only exposed by the Leader
+      #       zk_synced_followers,               #only exposed by the Leader
+      #       zk_pending_syncs,                  #only exposed by the Leader
+      #       zk_open_file_descriptor_count,     #only available on Unix platforms
+      #       zk_max_file_descriptor_count       #only available on Unix platforms
+      #     ]
+     
+     
+     
+      metricPrefix:  "Custom Metrics|Zookeeper|"
+      
+```
 
-
-          # The list of commands can be found here http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands
-
-          commands:
-             - command: "ruok"
-             - command: "stat"
-               separator: ":"
-               fields: [
-                  Received,
-                  Sent,
-                  Outstanding,
-                  Node count,
-                  Latency min/avg/max
-               ]
-
-          # Uncomment the following to support additional metrics
-          #   - command: "mntr"
-          #     separator: "\t"
-          #     fields: [
-          #       zk_avg_latency,
-          #       zk_max_latency,
-          #       zk_min_latency,
-          #       zk_packets_received,
-          #       zk_packets_sent,
-          #       zk_num_alive_connections,
-          #       zk_outstanding_requests,
-          #       zk_znode_count,
-          #       zk_watch_count,
-          #       zk_ephemerals_count,
-          #       zk_approximate_data_size,
-          #       zk_followers,                      #only exposed by the Leader
-          #       zk_synced_followers,               #only exposed by the Leader
-          #       zk_pending_syncs,                  #only exposed by the Leader
-          #       zk_open_file_descriptor_count,     #only available on Unix platforms
-          #       zk_max_file_descriptor_count       #only available on Unix platforms
-          #     ]
-
-
-
-          metricPrefix:  "Custom Metrics|Zookeeper|"
-   ```
   "ruok" command is the for the health check of the zookeeper server.
-
   Please make sure you indent your config.yml file with spaces. You can follow the Yaml tutorial here http://ess.khhq.net/wiki/YAML_Tutorial.
 
 
-2. Configure the path to the config.yml file by editing the <task-arguments> in the monitor.xml file in the `<MACHINE_AGENT_HOME>/monitors/Zookeeper/` directory. Below is the sample
+ 3. Configure the path to the config.yml file by editing the <task-arguments> in the monitor.xml file in the `<MACHINE_AGENT_HOME>/monitors/Zookeeper/` directory. Below is the sample
 
      ```
      <task-arguments>
