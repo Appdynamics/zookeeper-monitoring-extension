@@ -3,6 +3,8 @@ servers:
     displayName: zh1
   - server: "192.168.57.102:2181"
     displayName: zh2
+  - server: "192.168.57.103:2181"
+    displayName: zh3
 
 # The list of commands can be found here http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands
 
