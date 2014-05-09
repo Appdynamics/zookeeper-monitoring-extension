@@ -83,7 +83,7 @@ The commands and the fields to be extracted can be configured in the config.yml 
           metricPrefix:  "Custom Metrics|Zookeeper|"
    ```
 
-  Please make sure you indent your yaml file.
+  Please make sure you indent your config.yml file with spaces. You can follow the Yaml tutorial here http://ess.khhq.net/wiki/YAML_Tutorial.
 
 
 2. Configure the path to the config.yml file by editing the <task-arguments> in the monitor.xml file. Below is the sample
@@ -98,7 +98,20 @@ The commands and the fields to be extracted can be configured in the config.yml 
      ```
 
 
+## Contributing ##
 
+Always feel free to fork and contribute any changes directly via [GitHub][].
+
+## Community ##
+
+Find out more in the [AppDynamics Exchange][].
+
+## Support ##
+
+For any questions or feature request, please contact [AppDynamics Center of Excellence][].
+
+**Version:** 1.0.0
+**Controller Compatibility:** 3.7+
 
 
 
