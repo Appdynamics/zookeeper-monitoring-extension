@@ -97,7 +97,8 @@ The commands and the fields to be extracted can be configured in the config.yml 
      </task-arguments>
 
      ```
-
+## Custom Dashboad ##
+![](https://raw.githubusercontent.com/Appdynamics/zookeeper-monitoring-extension/master/zookeeper.png)
 
 ## Contributing ##
 
