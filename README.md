@@ -84,10 +84,10 @@ The commands and the fields to be extracted can be configured in the config.yml 
      ```
      
        "ruok" command is the for the health check of the zookeeper server.
-       Please make sure you indent your config.yml file with spaces. You can follow the Yaml tutorial here     http://ess.khhq.net/wiki/YAML_Tutorial.
+       Please make sure you indent your config.yml file with spaces. You can follow the Yaml tutorial here    http://ess.khhq.net/wiki/YAML_Tutorial.
 
 
- 3. Configure the path to the config.yml file by editing the <task-arguments> in the monitor.xml file in the `<MACHINE_AGENT_HOME>/monitors/Zookeeper/` directory. Below is the sample
+3. Configure the path to the config.yml file by editing the <task-arguments> in the monitor.xml file in the `<MACHINE_AGENT_HOME>/monitors/Zookeeper/` directory. Below is the sample
 
      ```
      <task-arguments>
