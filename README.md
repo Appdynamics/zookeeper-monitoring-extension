@@ -20,7 +20,7 @@ We also send "ruok" with a value -1 when an error occurs and 1 when the metrics 
 
 ## Configuration ##
 
-   ### Note:
+###Note
        Please make sure to not use tab (\t) while editing yaml files. You may want to validate the yaml file using a yaml validator http://yamllint.com/
 
 1. Configure the zookeeper instances by editing the config.yml file in `<MACHINE_AGENT_HOME>/monitors/ZookeeperMonitor/`.
