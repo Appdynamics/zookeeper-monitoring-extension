@@ -39,27 +39,27 @@ Please make sure to not use tab (\t) while editing yaml files. You may want to v
      
       
        ```
+           # List of zookeeper servers
            servers:
-             - server: "localhost:2181"     #host:port
-               displayName: zh1
-             - server: ""
-               displayName: zh2
-          
-          
+              - server: "localhost:2181"     #host:port
+             displayName: zh1
+           - server: ""
+             displayName: zh2
+           
            # The list of commands can be found here http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands
-          
+           
            commands:
-              - command: "ruok"
-              - command: "stat"
-                separator: ":"
-                fields: [
-                   Received,
-                   Sent,
-                   Outstanding,
-                   Node count,
-                   Latency min/avg/max
-                ]
-          
+            - command: "ruok"
+            - command: "stat"
+              separator: ":"
+              fields: [
+                 Received,
+                 Sent,
+                 Outstanding,
+                 Node count,
+                 Latency min/avg/max
+              ]
+           
            # Uncomment the following to support additional metrics
            #   - command: "mntr"
            #     separator: "\t"
@@ -81,15 +81,21 @@ Please make sure to not use tab (\t) while editing yaml files. You may want to v
            #       zk_open_file_descriptor_count,     #only available on Unix platforms
            #       zk_max_file_descriptor_count       #only available on Unix platforms
            #     ]
-          
-          
-          
+           
+           
+           #prefix used to show up metrics in AppDynamics
            metricPrefix:  "Custom Metrics|Zookeeper|"
            
+           # number of concurrent tasks
+           numberOfThreads: 10
+           
+           #timeout for the thread
+           threadTimeout: 10
+                    
      ```
      
        "ruok" command is the for the health check of the zookeeper server.
-       Please make sure you indent your config.yml file with spaces. You can follow the Yaml tutorial here    http://ess.khhq.net/wiki/YAML_Tutorial.
+       
 
 
 3. Configure the path to the config.yml file by editing the <task-arguments> in the monitor.xml file in the `<MACHINE_AGENT_HOME>/monitors/ZookeeperMonitor/` directory. Below is the sample
