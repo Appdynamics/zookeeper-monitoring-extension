@@ -95,7 +95,7 @@ public class ZookeeperMonitor extends AManagedMonitor {
         for (Future<ZookeeperMetrics> aParallelTask : parallelTasks) {
             ZookeeperMetrics zMetrics = null;
             try {
-                zMetrics = aParallelTask.get(10, TimeUnit.SECONDS);
+                zMetrics = aParallelTask.get(timeout, TimeUnit.SECONDS);
                 allMetrics.add(zMetrics);
             } catch (InterruptedException e) {
                 logger.error(getLogPrefix() + "Task interrupted." + e);
