@@ -1,3 +1,4 @@
+# List of zookeeper servers
 servers:
   - server: "localhost:2181"     #host:port
     displayName: zh1
@@ -41,5 +42,11 @@ commands:
 #     ]
 
 
-
+#prefix used to show up metrics in AppDynamics
 metricPrefix:  "Custom Metrics|Zookeeper|"
+
+# number of concurrent tasks
+numberOfThreads: 10
+
+#timeout for the thread
+threadTimeout: 10

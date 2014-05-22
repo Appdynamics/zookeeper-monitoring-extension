@@ -8,6 +8,7 @@ An AppDynamics extension to be used with a stand alone Java machine agent to pro
 The list of metrics provided is self-configurable. The metrics are extracted by running the commands listed in the [Zookeeper Documentation].
 The commands and the fields to be extracted can be configured in the config.yml file mentioned below.
 
+We also send "ruok" with a value -1 when an error occurs and 1 when the metrics collection is successful.
 
 
 ## Installation ##
@@ -18,7 +19,11 @@ The commands and the fields to be extracted can be configured in the config.yml 
 
 
 ## Configuration ##
-1. Configure the zookeeper instances by editing the config.yml file in `<MACHINE_AGENT_HOME>/monitors/Zookeeper/`.
+
+   ###Note:
+         Please make sure to not use tab (\t) while editing yaml files. You may want to validate the yaml file using a yaml validator http://yamllint.com/
+
+1. Configure the zookeeper instances by editing the config.yml file in `<MACHINE_AGENT_HOME>/monitors/ZookeeperMonitor/`.
 2. Configure the zookeeper commands in the config.yml file. Depending on the version of Zookeeper, you can run either "mntr" or "stat" or any other command. Please make sure you provide the right separator to parse the metric key and value.
  
      For eg. "stat" command returns the following
@@ -87,7 +92,7 @@ The commands and the fields to be extracted can be configured in the config.yml 
        Please make sure you indent your config.yml file with spaces. You can follow the Yaml tutorial here    http://ess.khhq.net/wiki/YAML_Tutorial.
 
 
-3. Configure the path to the config.yml file by editing the <task-arguments> in the monitor.xml file in the `<MACHINE_AGENT_HOME>/monitors/Zookeeper/` directory. Below is the sample
+3. Configure the path to the config.yml file by editing the <task-arguments> in the monitor.xml file in the `<MACHINE_AGENT_HOME>/monitors/ZookeeperMonitor/` directory. Below is the sample
 
      ```
      <task-arguments>
@@ -97,6 +102,9 @@ The commands and the fields to be extracted can be configured in the config.yml 
      </task-arguments>
 
      ```
+
+
+
 ## Custom Dashboad ##
 ![](https://raw.githubusercontent.com/Appdynamics/zookeeper-monitoring-extension/master/zookeeper.png)
 

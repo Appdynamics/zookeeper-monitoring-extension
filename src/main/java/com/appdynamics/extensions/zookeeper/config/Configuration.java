@@ -24,6 +24,8 @@ public class Configuration {
     String metricPrefix;
     Server[] servers;
     Command[] commands;
+    private int threadTimeout;
+    private int numberOfThreads;
 
     public Server[] getServers() {
         return servers;
@@ -47,6 +49,22 @@ public class Configuration {
 
     public void setCommands(Command[] commands) {
         this.commands = commands;
+    }
+
+    public int getThreadTimeout() {
+        return threadTimeout;
+    }
+
+    public void setThreadTimeout(int threadTimeout) {
+        this.threadTimeout = threadTimeout;
+    }
+
+    public int getNumberOfThreads() {
+        return numberOfThreads;
+    }
+
+    public void setNumberOfThreads(int numberOfThreads) {
+        this.numberOfThreads = numberOfThreads;
     }
 }
 

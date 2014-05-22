@@ -30,7 +30,8 @@ public class ZookeeperMonitor extends AManagedMonitor {
     public static final String CONFIG_ARG = "config-file";
     public static final String METRIC_SEPARATOR = "|";
     public static final String LOG_PREFIX = "log-prefix";
-    private static final int NUMBER_OF_THREADS = 10;
+    private static final int DEFAULT_NUMBER_OF_THREADS = 10;
+    public static final int DEFAULT_THREAD_TIMEOUT = 10;
 
     private ExecutorService threadPool;
     private static String logPrefix;
@@ -40,14 +41,9 @@ public class ZookeeperMonitor extends AManagedMonitor {
 
 
     public ZookeeperMonitor() {
-        this(NUMBER_OF_THREADS);
-    }
-
-    public ZookeeperMonitor(int numOfThreads) {
         String msg = "Using Monitor Version [" + getImplementationVersion() + "]";
         logger.info(msg);
         System.out.println(msg);
-        threadPool = Executors.newFixedThreadPool(numOfThreads);
     }
 
 
@@ -62,10 +58,11 @@ public class ZookeeperMonitor extends AManagedMonitor {
             try {
                 //read the config.
                 Configuration config = configUtil.readConfig(configFilename, Configuration.class);
+                threadPool = Executors.newFixedThreadPool(config.getNumberOfThreads() == 0 ? DEFAULT_NUMBER_OF_THREADS : config.getNumberOfThreads());
                 //create parallel tasks to telnet into each server
                 List<Future<ZookeeperMetrics>> parallelTasks = createParallelTasks(config);
                 //collect the metrics
-                List<ZookeeperMetrics> zMetrics = collectMetrics(parallelTasks);
+                List<ZookeeperMetrics> zMetrics = collectMetrics(parallelTasks,config.getThreadTimeout() == 0 ? DEFAULT_THREAD_TIMEOUT : config.getThreadTimeout());
                 //print the metrics
                 printStats(config, zMetrics);
                 logger.info(getLogPrefix() + "Zookeeper monitoring task completed successfully.");
@@ -93,7 +90,7 @@ public class ZookeeperMonitor extends AManagedMonitor {
     }
 
 
-    private List<ZookeeperMetrics> collectMetrics(List<Future<ZookeeperMetrics>> parallelTasks) {
+    private List<ZookeeperMetrics> collectMetrics(List<Future<ZookeeperMetrics>> parallelTasks,int timeout) {
         List<ZookeeperMetrics> allMetrics = new ArrayList<ZookeeperMetrics>();
         for (Future<ZookeeperMetrics> aParallelTask : parallelTasks) {
             ZookeeperMetrics zMetrics = null;

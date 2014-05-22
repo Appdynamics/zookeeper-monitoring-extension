@@ -13,7 +13,7 @@ public class ZookeeperMonitorTest {
 
     @Test
     public void testZookeeperMonitorExtension() throws TaskExecutionException {
-        ZookeeperMonitor zookeeper = new ZookeeperMonitor(NUMBER_OF_THREADS);
+        ZookeeperMonitor zookeeper = new ZookeeperMonitor();
         Map<String,String> taskArgs = Maps.newHashMap();
         taskArgs.put(CONFIG_ARG, "src/test/resources/conf/config.yml");
         zookeeper.execute(taskArgs,null);

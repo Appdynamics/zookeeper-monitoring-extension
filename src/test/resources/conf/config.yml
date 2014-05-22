@@ -1,10 +1,9 @@
+# List of zookeeper servers
 servers:
-  - server: "localhost:2181"
+  - server: "localhost:2181"     #host:port
     displayName: zh1
-  - server: "192.168.57.102:2181"
+  - server: ""
     displayName: zh2
-  - server: "192.168.57.103:2181"
-    displayName: zh3
 
 # The list of commands can be found here http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands
 
@@ -43,5 +42,11 @@ commands:
 #     ]
 
 
-
+#prefix used to show up metrics in AppDynamics
 metricPrefix:  "Custom Metrics|Zookeeper|"
+
+# number of concurrent tasks
+numberOfThreads: 10
+
+#timeout for the thread
+threadTimeout: 10
