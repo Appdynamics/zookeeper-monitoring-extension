@@ -128,6 +128,7 @@ For any questions or feature request, please contact [AppDynamics Center of Exce
 
 **Version:** 1.0.0
 **Controller Compatibility:** 3.7+
+**Zookeeper Version Tested On:** 3.3.3
 
 
 [Github]: https://github.com/Appdynamics/zookeeper-monitoring-extension
