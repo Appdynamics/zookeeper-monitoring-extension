@@ -109,7 +109,69 @@ Please make sure to not use tab (\t) while editing yaml files. You may want to v
 
      ```
 
+###Cluster level metrics : 
+ 
+As of 1.0.0 version of this extension, we support cluster level metrics only if each node in the cluster have a separate machine agent installed on it. There are two configurations required for this setup 
+ 
+1. Make sure that nodes belonging to the same cluster has the same <tier-name> in the<MACHINE_AGENT_HOME>/conf/controller-info.xml, we can gather cluster level metrics.  The tier-name here should be your cluster name. 
+ 
+2. Make sure that in every node in the cluster, the <MACHINE_AGENT_HOME>/monitors/ZookeeperMonitor/config.yaml should emit the same metric path. To achieve this make the displayName to be empty string and remove the trailing "|" in the metricPrefix.  The config.yaml should be something as below
 
+``` 
+# List of zookeeper servers
+servers:
+  - server: "localhost:2181"     #host:port
+    displayName: ""
+  
+# The list of commands can be found here http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands
+
+commands:
+   - command: "ruok"
+   - command: "stat"
+     separator: ":"
+     fields: [
+        Received,
+        Sent,
+        Outstanding,
+        Node count,
+        Latency min/avg/max
+     ]
+
+# Uncomment the following to support additional metrics
+#   - command: "mntr"
+#     separator: "\t"
+#     fields: [
+#       zk_avg_latency,
+#       zk_max_latency,
+#       zk_min_latency,
+#       zk_packets_received,
+#       zk_packets_sent,
+#       zk_num_alive_connections,
+#       zk_outstanding_requests,
+#       zk_znode_count,
+#       zk_watch_count,
+#       zk_ephemerals_count,
+#       zk_approximate_data_size,
+#       zk_followers,                      #only exposed by the Leader
+#       zk_synced_followers,               #only exposed by the Leader
+#       zk_pending_syncs,                  #only exposed by the Leader
+#       zk_open_file_descriptor_count,     #only available on Unix platforms
+#       zk_max_file_descriptor_count       #only available on Unix platforms
+#     ]
+
+
+#prefix used to show up metrics in AppDynamics
+metricPrefix:  "Custom Metrics|Zookeeper"
+
+# number of concurrent tasks
+numberOfThreads: 10
+
+#timeout for the thread
+threadTimeout: 10
+
+```
+
+Please note that for now the cluster level metrics are obtained by the summing all the node level metrics in a cluster. Other operations like (average) will be supported in the future releases of the extension.
 
 ## Custom Dashboad ##
 ![](https://raw.githubusercontent.com/Appdynamics/zookeeper-monitoring-extension/master/zookeeper.png)
