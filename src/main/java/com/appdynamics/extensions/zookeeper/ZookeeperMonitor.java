@@ -118,12 +118,19 @@ public class ZookeeperMonitor extends AManagedMonitor {
             while(it.hasNext()) {
                 String metricName = it.next();
                 String metricValue = metricsForAServer.get(metricName);
-                printCollectiveObservedCurrent(metricPath.toString() + metricName,metricValue);
+                printAverageAverageIndividual(metricPath.toString() + metricName, metricValue);
             }
         }
     }
 
 
+    private void printAverageAverageIndividual(String metricPath, String metricValue) {
+        printMetric(metricPath, metricValue,
+                MetricWriter.METRIC_AGGREGATION_TYPE_AVERAGE,
+                MetricWriter.METRIC_TIME_ROLLUP_TYPE_AVERAGE,
+                MetricWriter.METRIC_CLUSTER_ROLLUP_TYPE_INDIVIDUAL
+        );
+    }
 
     private void printCollectiveObservedCurrent(String metricPath, String metricValue) {
         printMetric(metricPath, metricValue,
