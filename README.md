@@ -110,6 +110,7 @@ Please make sure to not use tab (\t) while editing yaml files. You may want to v
      ```
 
 ###Cluster level metrics : 
+
 We support cluster level metrics only if each node in the cluster has a separate machine agent installed on it. There are two configurations required for this setup 
 
 1. Make sure that nodes belonging to the same cluster has the same <tier-name> in the <MACHINE_AGENT_HOME>/conf/controller-info.xml, we can gather cluster level metrics.  The tier-name here should be your cluster name. 
@@ -252,8 +253,6 @@ Application Performance Management | Custom Metrics | ClusterAB | Individual Nod
 
 Please note that for now the cluster level metrics are obtained by the averaging all the individual node level metrics in a cluster.
 
-
-
 ## Custom Dashboad ##
 ![](https://raw.githubusercontent.com/Appdynamics/zookeeper-monitoring-extension/master/zookeeper.png)
 
@@ -271,6 +270,7 @@ For any questions or feature request, please contact [AppDynamics Center of Exce
 
 **Version:** 1.0.0
 **Controller Compatibility:** 3.7+
+**Zookeeper Version Tested On:** 3.3.3
 
 
 [Github]: https://github.com/Appdynamics/zookeeper-monitoring-extension
