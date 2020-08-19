@@ -1,0 +1,12 @@
+Zookeeper version: 3.4.14-4c25d480e66aadd371de8bd2fd8da255ac140bcf, built on 03/06/2019 16:18 GMT
+Clients:
+ /0:0:0:0:0:0:0:1:49739[0](queued=0,recved=1,sent=0)
+
+Latency min/avg/max: 0/0/0
+Received: 1
+Sent: 0
+Connections: 1
+Outstanding: 0
+Zxid: 0x1053
+Mode: standalone
+Node count: 131
