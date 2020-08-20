@@ -3,7 +3,7 @@ zookeeper-monitoring-extension
 An AppDynamics extension to be used with a stand alone Java machine agent to provide metrics for Zookeeper servers.
 
 
-##Prerequisite
+## Prerequisite
 1. Before the extension is installed, the prerequisites mentioned [here](https://community.appdynamics.com/t5/Knowledge-Base/Extensions-Prerequisites-Guide/ta-p/35213) need to be met. Please do not proceed with the extension installation if the specified prerequisites are not met.
 2. The Extension also needs a [zookeeper](https://zookeeper.apache.org/) server to be installed.
 3. The extension needs to be able to connect to Zookeeper in order to collect and send metrics. To do this, you will have to either establish a remote connection in between the extension and the product, or have an agent on the same machine running the product in order for the extension to collect and send the metrics.
@@ -15,8 +15,8 @@ An AppDynamics extension to be used with a stand alone Java machine agent to pro
 
 ## Configuration ##
 
-####Config.yml
-#####Note: Please make sure to not use tab (\t) while editing yml files.
+#### Config.yml
+##### Note: Please make sure to not use tab (\t) while editing yml files.
 
 1. Configure the zookeeper instances by editing the config.yml file in `<MACHINE_AGENT_HOME>/monitors/ZookeeperMonitor/`.
     ```
@@ -39,25 +39,25 @@ An AppDynamics extension to be used with a stand alone Java machine agent to pro
     ```
     Please make sure to provide unique display names if multiple servers are configured.
 
-#####Number Of Threads
+##### Number Of Threads
 Always include one thread per server + 1.
 
 For example, if you have 4 zookeeper servers configured, then number of threads required are 5 (4 thread per server + 1 to run main task)     
 
-#####Yml Validation
+##### Yml Validation
 Please copy all the contents of the config.yml file and go to http://www.yamllint.com/ . On reaching the website, paste the contents and press the “Go” button on the bottom left.
 
-####Metrics.xml
+#### Metrics.xml
 
 You can add/remove metrics of your choice by modifying the provided metrics.xml file. Please look at how the metrics have been defined and follow the same convention when adding new metrics. You do have the ability to also chose your Rollup types as well as for each metric as well as set an alias name that you would like displayed on the metric browser.
 
-####Metrics
+#### Metrics
 The list of metrics provided is self-configurable. The metrics are extracted by running the commands listed in the [Zookeeper Documentation](http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands).
 The commands and the fields to be extracted can be configured in the config.yml file mentioned below.
 
 We also send "ruok" with a value 0 when an error occurs and 1 when the metrics collection is successful.
 
-####Cluster level metrics : 
+#### Cluster level metrics : 
 
 We support cluster level metrics only if each node in the cluster has a separate machine agent installed on it. There are two configurations required for this setup 
 
@@ -65,15 +65,15 @@ We support cluster level metrics only if each node in the cluster has a separate
 
 2. Make sure that in every node in the cluster, the <MACHINE_AGENT_HOME>/monitors/ZookeeperMonitor/config.yml should emit the same metric path. 
 
-##Extensions Workbench
+## Extensions Workbench
 
 Workbench is an inbuilt feature provided with each extension in order to assist you to fine tune the extension setup before you actually deploy it on the controller. Please review the following document on [How to use the Extensions WorkBench](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-use-the-Extensions-WorkBench/ta-p/30130).
 
-##Troubleshooting
+## Troubleshooting
 
 Please follow the steps listed in this [troubleshooting-document](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695) in order to troubleshoot your issue. These are a set of common issues that customers might have faced during the installation of the extension. If these don't solve your issue, please follow the last step on the [troubleshooting-document](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695) to contact the support team.
 
-##Support Tickets
+## Support Tickets
 
 If after going through the [Troubleshooting Document](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695) you have not been able to get your extension working, please file a ticket with the following information:
 
