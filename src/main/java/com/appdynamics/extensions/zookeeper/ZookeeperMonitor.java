@@ -28,13 +28,12 @@ import static com.appdynamics.extensions.zookeeper.Util.Constants.*;
 public class ZookeeperMonitor extends ABaseMonitor {
     private static final Logger logger = ExtensionsLoggerFactory.getLogger(ZookeeperMonitor.class);
 
-    private String METRIC_PREFIX = DEFAULT_METRIC_PREFIX;
     private MonitorContextConfiguration contextConfiguration;
     private Map<String,?> configYml = Maps.newHashMap();
 
     @Override
     protected String getDefaultMetricPrefix() {
-        return METRIC_PREFIX;
+        return DEFAULT_METRIC_PREFIX;
     }
 
     @Override

@@ -31,7 +31,7 @@ public class ZookeeperMonitorTask implements AMonitorTaskRunnable {
 
     private static final Logger logger = ExtensionsLoggerFactory.getLogger(ZookeeperMonitorTask.class);
 
-    private Map server;
+    private Map<String,?> server;
     private MetricWriteHelper metricWriteHelper;
     private MonitorContextConfiguration contextConfiguration;
     private BigInteger ruokValue = BigInteger.ZERO;
@@ -40,7 +40,7 @@ public class ZookeeperMonitorTask implements AMonitorTaskRunnable {
     private MetricCollector metricCollector;
 
 
-    public ZookeeperMonitorTask(MonitorContextConfiguration contextConfiguration, MetricWriteHelper metricWriteHelper, Map server, MetricCollector metricCollector) {
+    public ZookeeperMonitorTask(MonitorContextConfiguration contextConfiguration, MetricWriteHelper metricWriteHelper, Map<String,?> server, MetricCollector metricCollector) {
         this.contextConfiguration = contextConfiguration;
         this.metricWriteHelper = metricWriteHelper;
         this.metricCollector = metricCollector;
