@@ -1,0 +1,47 @@
+<!--
+  ~ Copyright 2020. AppDynamics LLC and its affiliates.
+  ~ All Rights Reserved.
+  ~ This is unpublished proprietary source code of AppDynamics LLC and its affiliates.
+  ~ The copyright notice above does not evidence any actual or intended publication of such source code.
+  -->
+
+<!--
+aggregationType = AVERAGE | SUM | OBSERVATION
+timeRollUpType = AVERAGE | SUM | CURRENT
+clusterRollUpType = INDIVIDUAL | COLLECTIVE
+-->
+<!--
+Set delta = true for metric to report per-min data
+-->
+<stats>
+    <stat name="Stat" command="stat" separator=":">
+        <metric attr="Received" alias="Received" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Sent" alias="Sent" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Connections" alias="Connections" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Outstanding" alias="Outstanding" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Node count" alias="Node Count" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Latency|Min" alias="Latency|Min" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Latency|Avg" alias="Latency|Avg" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Latency|Max" alias="Latency|Max" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+    </stat>
+    <stat name="Mntr" command="mntr" separator="\t">
+        <metric attr="zk_avg_latency" alias="Zk Average Latency" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="zk_max_latency" alias="ZK Maximum Latency" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="zk_min_latency" alias="Zk Minimum Latency" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="zk_packets_received" alias="Zk Packets Received" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="zk_packets_sent" alias="Zk Packets Sent" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="zk_num_alive_connections" alias="Zk Num Alive Connections" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="zk_outstanding_requests" alias="Zk Outstanding Requests" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="zk_znode_count" alias="Zk Znode Count" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="zk_watch_count" alias="Zk Watch Count" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="zk_ephemerals_count" alias="Zk Ephemerals Count" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="zk_approximate_data_size" alias="Zk Approximate Data Size" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <!--Below 3 metrics are only exposed by Leader-->
+        <metric attr="zk_followers" alias="Zk Followers" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="zk_synced_followers" alias="Zk Synced Followers" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="zk_pending_syncs" alias="Zk Pending Syncs" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <!--Below 2 metrics are only available on unix platform-->
+        <metric attr="zk_open_file_descriptor_count" alias="Zk Open File Descriptor Count" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="zk_max_file_descriptor_count" alias="Zk Max File Descriptor Count" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+    </stat>
+</stats>

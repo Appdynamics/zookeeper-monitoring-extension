@@ -3,277 +3,105 @@ zookeeper-monitoring-extension
 An AppDynamics extension to be used with a stand alone Java machine agent to provide metrics for Zookeeper servers.
 
 
-## Metrics Provided ##
-
-The list of metrics provided is self-configurable. The metrics are extracted by running the commands listed in the [Zookeeper Documentation].
-The commands and the fields to be extracted can be configured in the config.yml file mentioned below.
-
-We also send "ruok" with a value -1 when an error occurs and 1 when the metrics collection is successful.
-
+##Prerequisite
+1. Before the extension is installed, the prerequisites mentioned [here](https://community.appdynamics.com/t5/Knowledge-Base/Extensions-Prerequisites-Guide/ta-p/35213) need to be met. Please do not proceed with the extension installation if the specified prerequisites are not met.
+2. The Extension also needs a [zookeeper](https://zookeeper.apache.org/) server to be installed.
+3. The extension needs to be able to connect to Zookeeper in order to collect and send metrics. To do this, you will have to either establish a remote connection in between the extension and the product, or have an agent on the same machine running the product in order for the extension to collect and send the metrics.
 
 ## Installation ##
 
-1. Run "mvn clean install" and find the ZookeeperMonitor.zip file in the "target" folder. You can also download the ZookeeperMonitor.zip from [AppDynamics Exchange][].
-2. Unzip as "ZookeeperMonitor" and copy the "ZookeeperMonitor" directory to `<MACHINE_AGENT_HOME>/monitors`.
-
-
+1. Run "mvn clean install" and find the ZookeeperMonitor.zip file in the "target" folder. You can also download the ZookeeperMonitor.zip from [AppDynamics Exchange](https://www.appdynamics.com/community/exchange/extension/zookeeper-monitoring-extension/).
+2. Please place the extension in the "monitors" directory of your Machine Agent installation directory. Do not place the extension in the "extensions" directory of your Machine Agent installation directory.
 
 ## Configuration ##
 
-###Note
-Please make sure to not use tab (\t) while editing yaml files. You may want to validate the yaml file using a yaml validator http://yamllint.com/
+####Config.yml
+#####Note: Please make sure to not use tab (\t) while editing yml files.
 
 1. Configure the zookeeper instances by editing the config.yml file in `<MACHINE_AGENT_HOME>/monitors/ZookeeperMonitor/`.
-2. Configure the zookeeper commands in the config.yml file. Depending on the version of Zookeeper, you can run either "mntr" or "stat" or any other command. Please make sure you provide the right separator to parse the metric key and value.
- 
-     For eg. "stat" command returns the following
-     ```
-         Latency min/avg/max: 0/0/0
-         Received: 87
-         Sent: 86
-         Connections: 1
-         Outstanding: 0
-         Node count: 4
-     ```
-      You can configure the fields to be extracted and the separator to be used (":" here). Below is a sample config.yml file.
-     
-      
-       ```
-           # List of zookeeper servers
-           servers:
-              - server: "localhost:2181"     #host:port
-             displayName: zh1
-           - server: ""
-             displayName: zh2
-           
-           # The list of commands can be found here http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands
-           
-           commands:
-            - command: "ruok"
-            - command: "stat"
-              separator: ":"
-              fields: [
-                 Received,
-                 Sent,
-                 Outstanding,
-                 Node count,
-                 Latency min/avg/max
-              ]
-           
-           # Uncomment the following to support additional metrics
-           #   - command: "mntr"
-           #     separator: "\t"
-           #     fields: [
-           #       zk_avg_latency,
-           #       zk_max_latency,
-           #       zk_min_latency,
-           #       zk_packets_received,
-           #       zk_packets_sent,
-           #       zk_num_alive_connections,
-           #       zk_outstanding_requests,
-           #       zk_znode_count,
-           #       zk_watch_count,
-           #       zk_ephemerals_count,
-           #       zk_approximate_data_size,
-           #       zk_followers,                      #only exposed by the Leader
-           #       zk_synced_followers,               #only exposed by the Leader
-           #       zk_pending_syncs,                  #only exposed by the Leader
-           #       zk_open_file_descriptor_count,     #only available on Unix platforms
-           #       zk_max_file_descriptor_count       #only available on Unix platforms
-           #     ]
-           
-           
-           #prefix used to show up metrics in AppDynamics
-           metricPrefix:  "Custom Metrics|Zookeeper|"
-           
-           # number of concurrent tasks
-           numberOfThreads: 10
-           
-           #timeout for the thread
-           threadTimeout: 10
-                    
-     ```
-     
-       "ruok" command is the for the health check of the zookeeper server.
-       
+    ```
+        servers:
+          - host: "localhost"
+            port: 2181
+            name: "zh1"
+    ```
+    Provide zookeeper host, port and display name for your zookeeper server.
 
+2. You can configure multiple zookeeper servers like below:
+    ```
+        servers:
+          - host: "localhost"
+            port: 2181
+            name: "zh1"
+          - host: "localhost"
+            port: 2182
+            name: "zh2"   
+    ```
+    Please make sure to provide unique display names if multiple servers are configured.
 
-3. Configure the path to the config.yml file by editing the <task-arguments> in the monitor.xml file in the `<MACHINE_AGENT_HOME>/monitors/ZookeeperMonitor/` directory. Below is the sample
+#####Number Of Threads
+Always include one thread per server + 1.
 
-     ```
-     <task-arguments>
-         <!-- config file-->
-         <argument name="config-file" is-required="true" default-value="monitors/ZookeeperMonitor/config.yml" />
-          ....
-     </task-arguments>
+For example, if you have 4 zookeeper servers configured, then number of threads required are 5 (4 thread per server + 1 to run main task)     
 
-     ```
+#####Yml Validation
+Please copy all the contents of the config.yml file and go to http://www.yamllint.com/ . On reaching the website, paste the contents and press the “Go” button on the bottom left.
 
-###Cluster level metrics : 
+####Metrics.xml
+
+You can add/remove metrics of your choice by modifying the provided metrics.xml file. Please look at how the metrics have been defined and follow the same convention when adding new metrics. You do have the ability to also chose your Rollup types as well as for each metric as well as set an alias name that you would like displayed on the metric browser.
+
+####Metrics
+The list of metrics provided is self-configurable. The metrics are extracted by running the commands listed in the [Zookeeper Documentation](http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands).
+The commands and the fields to be extracted can be configured in the config.yml file mentioned below.
+
+We also send "ruok" with a value 0 when an error occurs and 1 when the metrics collection is successful.
+
+####Cluster level metrics : 
 
 We support cluster level metrics only if each node in the cluster has a separate machine agent installed on it. There are two configurations required for this setup 
 
 1. Make sure that nodes belonging to the same cluster has the same <tier-name> in the <MACHINE_AGENT_HOME>/conf/controller-info.xml, we can gather cluster level metrics.  The tier-name here should be your cluster name. 
 
-2. Make sure that in every node in the cluster, the <MACHINE_AGENT_HOME>/monitors/ZookeeperMonitor/config.yaml should emit the same metric path. To achieve this make the displayName to be empty string and remove the trailing "|" in the metricPrefix.  The config.yaml should be something as below
+2. Make sure that in every node in the cluster, the <MACHINE_AGENT_HOME>/monitors/ZookeeperMonitor/config.yml should emit the same metric path. 
 
-```
-           # List of zookeeper servers
-           servers:
-              - server: "localhost:2181"     #host:port
-                displayName: ""
-           
-           # The list of commands can be found here http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands
-           
-           commands:
-            - command: "ruok"
-            - command: "stat"
-              separator: ":"
-              fields: [
-                 Received,
-                 Sent,
-                 Outstanding,
-                 Node count,
-                 Latency min/avg/max
-              ]
-           
-           # Uncomment the following to support additional metrics
-           #   - command: "mntr"
-           #     separator: "\t"
-           #     fields: [
-           #       zk_avg_latency,
-           #       zk_max_latency,
-           #       zk_min_latency,
-           #       zk_packets_received,
-           #       zk_packets_sent,
-           #       zk_num_alive_connections,
-           #       zk_outstanding_requests,
-           #       zk_znode_count,
-           #       zk_watch_count,
-           #       zk_ephemerals_count,
-           #       zk_approximate_data_size,
-           #       zk_followers,                      #only exposed by the Leader
-           #       zk_synced_followers,               #only exposed by the Leader
-           #       zk_pending_syncs,                  #only exposed by the Leader
-           #       zk_open_file_descriptor_count,     #only available on Unix platforms
-           #       zk_max_file_descriptor_count       #only available on Unix platforms
-           #     ]
-           
-           
-           #prefix used to show up metrics in AppDynamics
-           metricPrefix:  "Custom Metrics|Zookeeper"
-           
-           # number of concurrent tasks
-           numberOfThreads: 10
-           
-           #timeout for the thread
-           threadTimeout: 10
-                    
-```
+##Extensions Workbench
 
-To make it more clear,assume that ZooKeeper "Node A" and ZooKeeper "Node B" belong to the same cluster "ClusterAB". In order to achieve cluster level as well as node level metrics, you should do the following
-        
-1. Both Node A and Node B should have separate machine agents installed on them. Both the machine agent should have their own ZooKeeper extension.
-    
-2. In the Node A's and Node B's machine agents' controller-info.xml make sure that you have the tier name to be your cluster name , "ClusterAB" here. Also, nodeName in controller-info.xml is "Node A" and "Node B" resp.
-        
-3. The config.yaml for Node A and Node B should be
+Workbench is an inbuilt feature provided with each extension in order to assist you to fine tune the extension setup before you actually deploy it on the controller. Please review the following document on [How to use the Extensions WorkBench](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-use-the-Extensions-WorkBench/ta-p/30130).
 
-```
-        
-        # List of zookeeper servers
-                   servers:
-                      - server: "localhost:2181"     #host:port
-                        displayName: ""
-                   
-                   # The list of commands can be found here http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands
-                   
-                   commands:
-                    - command: "ruok"
-                    - command: "stat"
-                      separator: ":"
-                      fields: [
-                         Received,
-                         Sent,
-                         Outstanding,
-                         Node count,
-                         Latency min/avg/max
-                      ]
-                   
-                   # Uncomment the following to support additional metrics
-                   #   - command: "mntr"
-                   #     separator: "\t"
-                   #     fields: [
-                   #       zk_avg_latency,
-                   #       zk_max_latency,
-                   #       zk_min_latency,
-                   #       zk_packets_received,
-                   #       zk_packets_sent,
-                   #       zk_num_alive_connections,
-                   #       zk_outstanding_requests,
-                   #       zk_znode_count,
-                   #       zk_watch_count,
-                   #       zk_ephemerals_count,
-                   #       zk_approximate_data_size,
-                   #       zk_followers,                      #only exposed by the Leader
-                   #       zk_synced_followers,               #only exposed by the Leader
-                   #       zk_pending_syncs,                  #only exposed by the Leader
-                   #       zk_open_file_descriptor_count,     #only available on Unix platforms
-                   #       zk_max_file_descriptor_count       #only available on Unix platforms
-                   #     ]
-                   
-                   
-                   #prefix used to show up metrics in AppDynamics
-                   metricPrefix:  "Custom Metrics|Zookeeper"
-                   
-                   # number of concurrent tasks
-                   numberOfThreads: 10
-                   
-                   #timeout for the thread
-                   threadTimeout: 10
-        
-```      
+##Troubleshooting
 
-        
-Now, if Node A and Node B are reporting say a metric called ReadLatency to the controller, with the above configuration they will be reporting it using the same metric path.
-        
-Node A reports Custom Metrics | ClusterAB | ReadLatency = 50 
-Node B reports Custom Metrics | ClusterAB | ReadLatency = 500
-        
-The controller will automatically average out the metrics at the cluster (tier) level as well. So you should be able to see the cluster level metrics under
-        
-Application Performance Management | Custom Metrics | ClusterAB | ReadLatency = 225
-        
-Also, now if you want to see individual node metrics you can view it under
-        
-Application Performance Management | Custom Metrics | ClusterAB | Individual Nodes | Node A | ReadLatency = 50 
-Application Performance Management | Custom Metrics | ClusterAB | Individual Nodes | Node B | ReadLatency = 500
+Please follow the steps listed in this [troubleshooting-document](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695) in order to troubleshoot your issue. These are a set of common issues that customers might have faced during the installation of the extension. If these don't solve your issue, please follow the last step on the [troubleshooting-document](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695) to contact the support team.
 
+##Support Tickets
 
+If after going through the [Troubleshooting Document](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695) you have not been able to get your extension working, please file a ticket with the following information:
 
-Please note that for now the cluster level metrics are obtained by the averaging all the individual node level metrics in a cluster.
+1. Stop the running machine agent .
+2. Delete all existing logs under <MachineAgent>/logs .
+3. Please enable debug logging by editing the file <MachineAgent>/conf/logging/log4j.xml. Change the level value of the following <logger> elements to debug. 
+    ```
+    <logger name="com.singularity">
+    <logger name="com.appdynamics">
+   ```
+4. Start the machine agent and please let it run for 10 mins. Then zip and upload all the logs in the directory <MachineAgent>/logs/*.
+Attach the zipped <MachineAgent>/conf/* directory.
+5. Attach the zipped <MachineAgent>/monitors/ExtensionFolderYouAreHavingIssuesWith directory .
+
+For any support related questions, you can also contact help@appdynamics.com.
 
 ## Custom Dashboad ##
 ![](https://raw.githubusercontent.com/Appdynamics/zookeeper-monitoring-extension/master/zookeeper.png)
 
 ## Contributing ##
 
-Always feel free to fork and contribute any changes directly via [GitHub][].
+Always feel free to fork and contribute any changes directly via [GitHub](https://github.com/Appdynamics/zookeeper-monitoring-extension).
 
-## Community ##
-
-Find out more in the [AppDynamics Exchange][].
-
-## Support ##
-
-For any questions or feature request, please contact [AppDynamics Center of Excellence][].
-
-**Version:** 1.0.0
-**Controller Compatibility:** 3.7+
-**Zookeeper Version Tested On:** 3.3.3
-
-
-[Github]: https://github.com/Appdynamics/zookeeper-monitoring-extension
-[AppDynamics Exchange]: http://community.appdynamics.com/t5/AppDynamics-eXchange/idb-p/extensions
-[AppDynamics Center of Excellence]: mailto:ace-request@appdynamics.com
-[Zookeeper Documentation]: http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands
+## Version
+|          Name            |  Version   |
+|--------------------------|------------|
+|Extension Version         |1.1.0       |
+|Controller Compatibility  |4.5 or Later|
+|Machine Agent Version     |4.5.13+     |
+|Product Tested on         |3.4.14      |
+|Last Update               |08/19/2020  |

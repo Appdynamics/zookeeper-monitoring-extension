@@ -1,0 +1,22 @@
+<!--
+  ~ Copyright 2020. AppDynamics LLC and its affiliates.
+  ~ All Rights Reserved.
+  ~ This is unpublished proprietary source code of AppDynamics LLC and its affiliates.
+  ~ The copyright notice above does not evidence any actual or intended publication of such source code.
+  -->
+
+<!--
+aggregationType = AVERAGE | SUM | OBSERVATION
+timeRollUpType = AVERAGE | SUM | CURRENT
+clusterRollUpType = INDIVIDUAL | COLLECTIVE
+-->
+<!--
+Set delta = true for metric to report per-min data
+-->
+<stats>
+    <stat name="Stat" command="stat" separator=":">
+        <metric attr="Received" alias="Received" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Sent" alias="Sent" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Connections" alias="Connections" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+    </stat>
+</stats>

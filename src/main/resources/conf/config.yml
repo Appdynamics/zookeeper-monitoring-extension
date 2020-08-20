@@ -1,52 +1,48 @@
+# Use this only if SIM is enabled
+#metricPrefix: "Custom Metrics|Zookeeper|"
+
+# If SIM is not enabled, then use this
+metricPrefix:  "Server|Component:<TIER_ID>|Custom Metrics|Zookeeper|"
+#To find the <COMPONENT_ID> in your environment,
+#please follow the screenshot https://docs.appdynamics.com/display/PRO42/Build+a+Monitoring+Extension+Using+Java
+
+
 # List of zookeeper servers
 servers:
-  - server: "localhost:2181"     #host:port
-    displayName: zh1
-  - server: ""
-    displayName: zh2
+  - host: "localhost"
+    port: 2181
+    name: "zh1"
 
 # The list of commands can be found here http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#sc_zkCommands
 
-commands:
-   - command: "ruok"
-   - command: "stat"
-     separator: ":"
-     fields: [
-        Received,
-        Sent,
-        Outstanding,
-        Node count,
-        Latency min/avg/max
-     ]
-
-# Uncomment the following to support additional metrics
-#   - command: "mntr"
-#     separator: "\t"
-#     fields: [
-#       zk_avg_latency,
-#       zk_max_latency,
-#       zk_min_latency,
-#       zk_packets_received,
-#       zk_packets_sent,
-#       zk_num_alive_connections,
-#       zk_outstanding_requests,
-#       zk_znode_count,
-#       zk_watch_count,
-#       zk_ephemerals_count,
-#       zk_approximate_data_size,
-#       zk_followers,                      #only exposed by the Leader
-#       zk_synced_followers,               #only exposed by the Leader
-#       zk_pending_syncs,                  #only exposed by the Leader
-#       zk_open_file_descriptor_count,     #only available on Unix platforms
-#       zk_max_file_descriptor_count       #only available on Unix platforms
-#     ]
-
-
-#prefix used to show up metrics in AppDynamics
-metricPrefix:  "Custom Metrics|Zookeeper|"
 
 # number of concurrent tasks
-numberOfThreads: 10
+numberOfThreads: 5
 
-#timeout for the thread
-threadTimeout: 10
+connection:
+  socketTimeout: 10000
+
+# If any of the following fields are not set, the values of the specific fields are set from the system properties of the corresponding fields as specified in the comments.
+# If the system properties are not set for the field, then the data is retrieved from machine agent configFile. Please refer to ControllerInfoFactory for more details.
+# Values provided here can be overridden if the same field is configured in either controller-info.xml or system properties.
+controllerInfo:
+  controllerHost: ""  # -Dappdynamics.controller.hostName
+  controllerPort:  # -Dappdynamics.controller.port
+  controllerSslEnabled: false # -Dappdynamics.controller.ssl.enabled
+  enableOrchestration: false # N/A
+  uniqueHostId: "" # -Dappdynamics.agent.uniqueHostId
+  username: "admin" # -Dappdynamics.agent.monitors.controller.username
+  password: "" # -Dappdynamics.agent.monitors.controller.password
+  encryptedPassword: "j+0oxTzUtw2xAdaq4UUq/Q==" # -Dappdynamics.agent.monitors.controller.encryptedPassword
+  accountAccessKey: "" # -Dappdynamics.agent.accountAccessKey
+  account: "" # -Dappdynamics.agent.accountName
+  machinePath: "" # -Dappdynamics.machine.agent.hierarchyPath
+  simEnabled: false # -Dappdynamics.sim.enabled
+  applicationName: "" # -Dappdynamics.agent.applicationName
+  tierName: "" # -Dappdynamics.agent.tierName
+  nodeName: "" # -Dappdynamics.agent.nodeName
+
+#Encryption key for your controllerInfo password
+encryptionKey: "abcd"
+
+enableHealthChecks: false

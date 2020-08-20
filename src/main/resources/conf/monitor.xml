@@ -22,7 +22,7 @@
         <task-arguments>
             <!-- config file-->
             <argument name="config-file" is-required="true" default-value="monitors/ZookeeperMonitor/config.yml" />
-            <argument name="log-prefix" is-required="false" default-value="[ZookeeperAppDExt] " />
+            <argument name="metric-file" is-required="true" default-value="monitors/ZookeeperMonitor/metrics.xml" />
         </task-arguments>
         <java-task>
             <classpath>zookeeper-monitoring-extension.jar</classpath>
