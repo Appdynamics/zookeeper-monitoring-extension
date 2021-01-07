@@ -44,5 +44,3 @@ controllerInfo:
 
 #Encryption key for your controllerInfo password
 encryptionKey: "abcd"
-
-enableHealthChecks: false
