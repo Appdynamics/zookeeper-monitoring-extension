@@ -100,8 +100,8 @@ Always feel free to fork and contribute any changes directly via [GitHub](https:
 ## Version
 |          Name            |  Version   |
 |--------------------------|------------|
-|Extension Version         |1.1.0       |
+|Extension Version         |1.1.1       |
 |Controller Compatibility  |4.5 or Later|
 |Machine Agent Version     |4.5.13+     |
 |Product Tested on         |3.4.14      |
-|Last Update               |08/19/2020  |
+|Last Update               |06/01/2021  |
