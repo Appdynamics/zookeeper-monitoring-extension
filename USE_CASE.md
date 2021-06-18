@@ -1,4 +1,4 @@
-# zookeeper-monitoring-extension
+# Zookeeper Monitoring Extension
  
 An AppDynamics extension to be used with a stand alone Java machine agent to provide metrics for Zookeeper servers.
  
