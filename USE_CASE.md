@@ -1,6 +1,6 @@
 # Zookeeper Monitoring Extension
  
-An AppDynamics extension to be used with a stand alone Java machine agent to provide metrics for Zookeeper servers.
+An AppDynamics extension to be used with a stand alone Java machine agent to provide metrics for Zookeeper servers. This extensions uses 4 letter zookeeper command (stat, mntr) and extract metrics from the server.
  
 ## Related Sandbox
  
