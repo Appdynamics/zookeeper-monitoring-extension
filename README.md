@@ -1,6 +1,8 @@
 zookeeper-monitoring-extension
 ==============================
-An AppDynamics extension to be used with a stand alone Java machine agent to provide metrics for Zookeeper servers.
+
+## Use Case
+An AppDynamics extension to be used with a stand alone Java machine agent to provide metrics for Zookeeper servers. This extensions uses 4 letter zookeeper command (stat, mntr) and extract metrics from the server.
 
 
 ## Prerequisite
@@ -63,7 +65,12 @@ We support cluster level metrics only if each node in the cluster has a separate
 
 1. Make sure that nodes belonging to the same cluster has the same <tier-name> in the <MACHINE_AGENT_HOME>/conf/controller-info.xml, we can gather cluster level metrics.  The tier-name here should be your cluster name. 
 
-2. Make sure that in every node in the cluster, the <MACHINE_AGENT_HOME>/monitors/ZookeeperMonitor/config.yml should emit the same metric path. 
+2. Make sure that in every node in the cluster, the <MACHINE_AGENT_HOME>/monitors/ZookeeperMonitor/config.yml should emit the same metric path.
+
+## Credentials Encryption ##
+
+Please visit [Encryption Guidelines](https://community.appdynamics.com/t5/Knowledge-Base/How-to-use-Password-Encryption-with-Extensions/ta-p/29397) to get detailed instructions on password encryption. The steps in this document will guide you through the whole process.
+If you want to use password encryption, please send arguments as connectionProperties. You will have to fill in the encrypted Password and Encryption Key fields in the config but you will also have to give an empty "" value to the password field and the encrypted password will be automatically picked up.
 
 ## Extensions Workbench
 
