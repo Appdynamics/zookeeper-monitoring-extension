@@ -78,24 +78,29 @@ Workbench is an inbuilt feature provided with each extension in order to assist 
 
 ## Troubleshooting
 
-Please follow the steps listed in this [troubleshooting-document](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695) in order to troubleshoot your issue. These are a set of common issues that customers might have faced during the installation of the extension. If these don't solve your issue, please follow the last step on the [troubleshooting-document](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695) to contact the support team.
-
-## Support Tickets
-
-If after going through the [Troubleshooting Document](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695) you have not been able to get your extension working, please file a ticket with the following information:
-
-1. Stop the running machine agent .
-2. Delete all existing logs under <MachineAgent>/logs .
-3. Please enable debug logging by editing the file <MachineAgent>/conf/logging/log4j.xml. Change the level value of the following <logger> elements to debug. 
+1. Please follow the steps listed in this [troubleshooting-document](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695) in order to troubleshoot your issue. These are a set of common issues that customers might have faced during the installation of the extension.
+    
+2. Check if below command output is successful
     ```
-    <logger name="com.singularity">
-    <logger name="com.appdynamics">
-   ```
-4. Start the machine agent and please let it run for 10 mins. Then zip and upload all the logs in the directory <MachineAgent>/logs/*.
-Attach the zipped <MachineAgent>/conf/* directory.
-5. Attach the zipped <MachineAgent>/monitors/ExtensionFolderYouAreHavingIssuesWith directory .
+       >echo ruok | nc <host> <port>
+        imok //expected output
 
-For any support related questions, you can also contact help@appdynamics.com.
+        >echo <command> | nc <host> <port> //command can be any like stat, mntr etc.
+
+        >echo stat | nc localhost 2181
+         Zookeeper version: 3.4.14-4c25d480e66aadd371de8bd2fd8da255ac140bcf, built on 03/06/2019 16:18 GMT
+         Clients:
+         /127.0.0.1:49398[1](queued=0,recved=2999,sent=3000)
+         /0:0:0:0:0:0:0:1:53911[0](queued=0,recved=1,sent=0)
+         Latency min/avg/max: 0/0/15
+         Received: 3028
+         Sent: 3028
+         Connections: 2
+         Outstanding: 0
+         Zxid: 0x1088
+         Mode: standalone
+         Node count: 133
+    ```    
 
 ## Custom Dashboad ##
 ![](https://raw.githubusercontent.com/Appdynamics/zookeeper-monitoring-extension/master/zookeeper.png)
